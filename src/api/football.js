@@ -20,7 +20,7 @@ export function getTeams(options) {
 }
 
 export function getTeamMatches(teamId, options) {
-  return apiRequest(`/teams/${teamId}/matches/?competitions=${COMPETITION_ID}`, options)
+  return apiRequest(`/teams/${teamId}/matches?competitions=${COMPETITION_ID}`, options)
 }
 
 // Data local (YYYY-MM-DD), a mesma que a pessoa vê no calendário.

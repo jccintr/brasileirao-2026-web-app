@@ -114,3 +114,11 @@ describe('handleFootballRequest', () => {
     expect(res.headers['cache-control']).toBe('no-store')
   })
 })
+
+import { buildUpstreamUrl as _build } from './footballProxy.js'
+import { it as _it, expect as _expect } from 'vitest'
+_it('aceita barra final no caminho', () => {
+  _expect(_build('v4/teams/1783/matches/', { competitions: '2013' })).toBe(
+    'https://api.football-data.org/v4/teams/1783/matches?competitions=2013',
+  )
+})

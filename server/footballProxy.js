@@ -22,7 +22,7 @@ const first = (value) => (Array.isArray(value) ? value[0] : value)
 // Retorna null se o caminho ou algum parâmetro não for permitido.
 export function buildUpstreamUrl(pathSegments, query = {}, base = UPSTREAM) {
   const segments = (Array.isArray(pathSegments) ? pathSegments : [pathSegments]).filter(Boolean)
-  const path = segments.join('/')
+  const path = segments.join('/').replace(/\/+$/, '') // tolera barra final
   if (!ALLOWED_PATHS.some((pattern) => pattern.test(path))) return null
 
   const params = new URLSearchParams()
