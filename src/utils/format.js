@@ -3,6 +3,8 @@ export const STATUS_LABELS = {
   TIMED: 'Agendado',
   IN_PLAY: 'Ao vivo',
   PAUSED: 'Intervalo',
+  EXTRA_TIME: 'Prorrogação',
+  PENALTY_SHOOTOUT: 'Pênaltis',
   FINISHED: 'Encerrado',
   POSTPONED: 'Adiado',
   SUSPENDED: 'Suspenso',

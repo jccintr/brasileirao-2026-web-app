@@ -34,4 +34,20 @@ describe('MatchCard', () => {
     expect(screen.getByText('Flamengo')).toBeInTheDocument()
     expect(screen.getByText('?')).toBeInTheDocument()
   })
+
+  it.each([
+    ['PAUSED', 'Intervalo'],
+    ['EXTRA_TIME', 'Prorrogação'],
+    ['PENALTY_SHOOTOUT', 'Pênaltis'],
+  ])('status %s também é ao vivo e mostra o detalhe "%s"', (status, detail) => {
+    render(<MatchCard match={{ ...base, status, score: { fullTime: { home: 1, away: 1 } } }} />)
+    expect(screen.getByText('Ao vivo')).toBeInTheDocument()
+    expect(screen.getByText(new RegExp(detail))).toBeInTheDocument()
+    expect(screen.getByLabelText('Placar')).toHaveTextContent('1 - 1')
+  })
+
+  it('jogo em andamento normal não mostra detalhe extra', () => {
+    render(<MatchCard match={{ ...base, status: 'IN_PLAY', score: { fullTime: { home: 0, away: 0 } } }} />)
+    expect(screen.queryByText(/Intervalo|Prorrogação|Pênaltis/)).not.toBeInTheDocument()
+  })
 })

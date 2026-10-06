@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from 'react-router-dom'
-import { FiAward, FiCalendar, FiSettings, FiShield } from 'react-icons/fi'
+import { FiActivity, FiAward, FiCalendar, FiSettings, FiShield } from 'react-icons/fi'
 import Logo from './Logo.jsx'
 import ThemeToggle from './ThemeToggle.jsx'
 
@@ -7,6 +7,7 @@ const TABS = [
   { to: '/', label: 'Classificação', Icon: FiAward, end: true },
   { to: '/rodadas', label: 'Rodadas', Icon: FiCalendar },
   { to: '/equipes', label: 'Equipes', Icon: FiShield },
+  { to: '/ao-vivo', label: 'Ao Vivo', Icon: FiActivity },
   { to: '/ajustes', label: 'Ajustes', Icon: FiSettings },
 ]
 
@@ -51,7 +52,7 @@ export default function AppShell() {
         aria-label="Principal"
         className="fixed inset-x-0 bottom-0 z-20 border-t border-line bg-surface pb-[env(safe-area-inset-bottom)] md:hidden"
       >
-        <ul className="mx-auto grid max-w-md grid-cols-4">
+        <ul className="mx-auto grid max-w-lg grid-cols-5">
           {TABS.map(({ to, label, Icon, end }) => (
             <li key={to}>
               <NavLink

@@ -69,6 +69,15 @@ describe('apiRequest', () => {
     expect(fetchMock).toHaveBeenCalledTimes(1)
   })
 
+  it('chamadas simultâneas com skipCache também compartilham a busca em andamento', async () => {
+    const fetchMock = vi.fn().mockResolvedValue(jsonResponse({}))
+    vi.stubGlobal('fetch', fetchMock)
+    const { apiRequest } = await loadClient()
+
+    await Promise.all([apiRequest('/a', { skipCache: true }), apiRequest('/a', { skipCache: true })])
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+  })
+
   it.each([
     [403, /Acesso negado/],
     [404, /não encontrado/],

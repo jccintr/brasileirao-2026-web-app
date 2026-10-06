@@ -1,4 +1,5 @@
 import { STATUS_LABELS, formatDateTime } from '../utils/format.js'
+import { isLiveStatus } from '../utils/liveMatches.js'
 import TeamCrest from './TeamCrest.jsx'
 
 function Side({ team }) {
@@ -13,7 +14,7 @@ function Side({ team }) {
 }
 
 export default function MatchCard({ match }) {
-  const isLive = match.status === 'IN_PLAY' || match.status === 'PAUSED'
+  const isLive = isLiveStatus(match.status)
   const home = match.score?.fullTime?.home
   const away = match.score?.fullTime?.away
   const hasScore = home != null && away != null
@@ -29,6 +30,9 @@ export default function MatchCard({ match }) {
           <span className="inline-flex items-center gap-1.5 font-bold uppercase tracking-wider text-danger">
             <span className="live-dot size-2 rounded-full bg-danger" aria-hidden="true" />
             Ao vivo
+            {match.status !== 'IN_PLAY' && (
+              <span className="font-medium normal-case tracking-normal"> · {STATUS_LABELS[match.status]}</span>
+            )}
           </span>
         ) : (
           <span className="text-muted">{STATUS_LABELS[match.status] ?? match.status}</span>

@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
+import { useLiveAutoNavigate } from './hooks/useLiveAutoNavigate.js'
 import { Link, Route, Routes } from 'react-router-dom'
 import AppShell from './components/AppShell.jsx'
+import LivePage from './pages/LivePage.jsx'
 import RoundsPage from './pages/RoundsPage.jsx'
 import SettingsPage from './pages/SettingsPage.jsx'
 import StandingsPage from './pages/StandingsPage.jsx'
@@ -20,6 +22,8 @@ function NotFound() {
 }
 
 export default function App() {
+  useLiveAutoNavigate()
+
   useEffect(() => {
     document.title = 'Brasileirão 2026'
   }, [])
@@ -32,6 +36,7 @@ export default function App() {
         <Route path="equipes" element={<TeamsPage />} />
         <Route path="equipes/:teamId" element={<TeamDetailPage />} />
         <Route path="ajustes" element={<SettingsPage />} />
+        <Route path="ao-vivo" element={<LivePage />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

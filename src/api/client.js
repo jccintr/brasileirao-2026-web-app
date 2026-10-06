@@ -50,7 +50,8 @@ export async function apiRequest(path, { skipCache = false } = {}) {
     return cached.data
   }
 
-  if (!skipCache && inflight.has(path)) return inflight.get(path)
+  // Uma chamada em andamento é, por definição, recente: reaproveita mesmo com skipCache.
+  if (inflight.has(path)) return inflight.get(path)
 
   const promise = request(path)
     .then((data) => {

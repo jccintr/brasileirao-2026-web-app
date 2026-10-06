@@ -22,3 +22,21 @@ export function getTeams(options) {
 export function getTeamMatches(teamId, options) {
   return apiRequest(`/teams/${teamId}/matches/?competitions=${COMPETITION_ID}`, options)
 }
+
+// Data local (YYYY-MM-DD), a mesma que a pessoa vê no calendário.
+export function todayISODate(now = new Date()) {
+  const yyyy = now.getFullYear()
+  const mm = String(now.getMonth() + 1).padStart(2, '0')
+  const dd = String(now.getDate()).padStart(2, '0')
+  return `${yyyy}-${mm}-${dd}`
+}
+
+// Partidas de hoje (não só as "ao vivo"): a API não tem um status combinado para
+// IN_PLAY + PAUSED, então trazemos o dia e filtramos no cliente (utils/liveMatches.js).
+// Sempre ignora o cache: a aba Ao Vivo atualiza sozinha e precisa do placar mais recente.
+export function getTodayMatches() {
+  const today = todayISODate()
+  return apiRequest(`/competitions/${COMPETITION_CODE}/matches?dateFrom=${today}&dateTo=${today}`, {
+    skipCache: true,
+  })
+}
