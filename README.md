@@ -46,7 +46,7 @@ src/index.css                    # tokens de cor (claro/escuro) + Tailwind
 
 ## Publicando na Vercel
 
-O repositório já traz o proxy de produção: `api/football/[...path].js` (função serverless) + `server/footballProxy.js` + `vercel.json`. Ele guarda a chave no servidor, só repassa as rotas que o app usa e usa o cache da CDN (30 s nos jogos do dia, 60 s no resto), então todos os visitantes juntos gastam poucas requisições do limite de 10 por minuto.
+O repositório já traz o proxy de produção: `api/football.js` (função serverless; o `vercel.json` reescreve `/football-api/...` para `/api/football?path=...`) + `server/footballProxy.js` + `vercel.json`. Ele guarda a chave no servidor, só repassa as rotas que o app usa e usa o cache da CDN (30 s nos jogos do dia, 60 s no resto), então todos os visitantes juntos gastam poucas requisições do limite de 10 por minuto.
 
 Em **Settings → Environment Variables** do projeto na Vercel:
 
@@ -56,6 +56,8 @@ Em **Settings → Environment Variables** do projeto na Vercel:
 | `FOOTBALL_DATA_TOKEN` | sua chave (**sem** o prefixo `VITE_`, para não ir para o navegador) |
 
 Se existir `VITE_FOOTBALL_DATA_TOKEN` na Vercel, apague: com esse prefixo a chave é embutida no site. Depois faça um novo deploy (variáveis `VITE_` são lidas no build).
+
+Para conferir o deploy, abra `/api/ping` (deve mostrar `tokenConfigurado: true`) e depois `/football-api/v4/competitions/BSA/standings`.
 
 O `vercel.json` também faz as rotas do app (`/rodadas`, `/equipes/123`...) funcionarem ao recarregar a página.
 
