@@ -1,0 +1,103 @@
+@import 'tailwindcss';
+
+/* Tema escuro controlado pela classe `dark` no <html> (ver ThemeContext). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Tokens semânticos (mesma paleta do app Android). Os componentes usam
+   `bg-surface`, `text-fg` etc., então não precisam repetir `dark:` em todo lugar. */
+:root {
+  color-scheme: light;
+  --bg: #f2f4f3;
+  --surface: #ffffff;
+  --elevated: #f4f6f4;
+  --line: #e1e4e1;
+  --fg: #151b15;
+  --soft: #4b554c;
+  --muted: #687168;
+  --primary: #009739;
+  --primary-text: #007a2e; /* verde para TEXTO sobre fundo claro (contraste AA) */
+  --on-primary: #ffffff;
+  --gold: #fedd00;
+  --danger: #c93a2f;
+  --header-bg: #009739;
+  --header-fg: #ffffff;
+  --zone-libertadores: #1d4ed8;
+  --zone-pre: #60a5fa;
+  --zone-sula: #f59e0b;
+  --zone-relegation: #d6473c;
+  --shadow: 0 10px 30px -12px rgb(21 27 21 / 0.25);
+}
+
+.dark {
+  color-scheme: dark;
+  --bg: #0e1410;
+  --surface: #161d17;
+  --elevated: #1e271f;
+  --line: #2a342b;
+  --fg: #f2f4f2;
+  --soft: #b7c1b7;
+  --muted: #8b968d;
+  --primary: #2fbe63;
+  --primary-text: #2fbe63;
+  --on-primary: #06130a;
+  --gold: #fedd00;
+  --danger: #e8695f;
+  --header-bg: #0e1410;
+  --header-fg: #f2f4f2;
+  --zone-libertadores: #3b82f6;
+  --zone-pre: #93c5fd;
+  --zone-sula: #fbbf24;
+  --zone-relegation: #e8695f;
+  --shadow: 0 10px 30px -10px rgb(0 0 0 / 0.7);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-elevated: var(--elevated);
+  --color-line: var(--line);
+  --color-fg: var(--fg);
+  --color-soft: var(--soft);
+  --color-muted: var(--muted);
+  --color-primary: var(--primary);
+  --color-primary-text: var(--primary-text);
+  --color-on-primary: var(--on-primary);
+  --color-gold: var(--gold);
+  --color-danger: var(--danger);
+  --color-header: var(--header-bg);
+  --color-header-fg: var(--header-fg);
+  --shadow-float: var(--shadow);
+  --font-heading: 'Barlow Condensed', 'Inter', sans-serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+body {
+  @apply bg-bg text-fg font-sans antialiased;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+h1, h2, h3 {
+  @apply font-heading uppercase tracking-wide;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--elevated) 25%, var(--line) 50%, var(--elevated) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.live-dot {
+  animation: live-pulse 1.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton, .live-dot { animation: none; }
+}
